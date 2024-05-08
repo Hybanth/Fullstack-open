@@ -4,9 +4,13 @@ const Button = ({handleClick,text}) =>(
 <button onClick={handleClick}>{text}</button>
 )
 
+const StatisticsLine = (props) =>(
+      <p>{props.name} {props.name === 'percentage' ? props.value + '%' : props.value}</p>
+     );
+
 const  Statistics = (props) => {
  
-  if(props.all ===0){
+  if(props.all === 0){
     return(
       <div>
       <h1>statistics</h1>
@@ -18,16 +22,16 @@ const  Statistics = (props) => {
   return(
   <div>
     <h1>statistics</h1>
-  <p>good {props.good}</p>
-  <p>neutral {props.neutral}</p>
-  <p>bad {props.bad}</p>
-  <p>all {props.all}</p>
-  <p>average {props.average}</p>
-  <p>percentage {props.percentage}%</p>
+  <StatisticsLine name="good" value={props.good} />
+  <StatisticsLine name="neutral" value={props.neutral} />
+  <StatisticsLine name="bad" value={props.bad} />
+  <StatisticsLine name="all" value={props.all} />
+  <StatisticsLine name="average" value={props.average} />
+  <StatisticsLine name="percentage" value={props.percentage} />
+  
  </div>
   );
 }
-
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -44,7 +48,6 @@ const App = () => {
     <Button handleClick={() => {setBad(bad+1); setAll(all+1)}} text="negative" />
     <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} percentage={percentage}  />
     
-  
     </div>
   )
 }
