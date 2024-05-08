@@ -5,7 +5,7 @@ const Button = ({handleClick,text}) =>(
 )
 
 const StatisticsLine = (props) =>(
-      <p>{props.name} {props.name === 'percentage' ? props.value + '%' : props.value}</p>
+      <tr><td>{props.name}</td><td>{props.name === 'percentage' ? props.value + '%' : props.value}</td></tr>
      );
 
 const  Statistics = (props) => {
@@ -21,14 +21,16 @@ const  Statistics = (props) => {
 
   return(
   <div>
-    <h1>statistics</h1>
+  <h1>statistics</h1>
+  <table><tbody>
   <StatisticsLine name="good" value={props.good} />
   <StatisticsLine name="neutral" value={props.neutral} />
   <StatisticsLine name="bad" value={props.bad} />
   <StatisticsLine name="all" value={props.all} />
   <StatisticsLine name="average" value={props.average} />
   <StatisticsLine name="percentage" value={props.percentage} />
-  
+  </tbody>
+  </table>
  </div>
   );
 }
@@ -47,7 +49,7 @@ const App = () => {
     <Button handleClick={() => {setNeutral(neutral+1); setAll(all+1)}} text="neutral" />
     <Button handleClick={() => {setBad(bad+1); setAll(all+1)}} text="negative" />
     <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} percentage={percentage}  />
-    
+
     </div>
   )
 }
