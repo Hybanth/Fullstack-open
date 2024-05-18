@@ -12,10 +12,16 @@ const App = () => {
 
   const formHandling = (event) => {
     event.preventDefault();
+    const checkDuplicate = persons.some(person =>person.name === newName);
+    if(checkDuplicate){
+      alert(newName + ' is already added to phonebook');
+    }else{
     const newPerson = { name: newName };
     setPersons(persons.concat(newPerson));
+    }
     setNewName('');
   }
+  
 
   return (
     <div>
@@ -24,7 +30,6 @@ const App = () => {
         <div>
           name: <input value={newName} onChange={nameChange} />
         </div>
-        <div>debug: {newName}</div>
         <div>
           <button type="submit">add</button>
         </div>
