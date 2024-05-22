@@ -24,3 +24,5 @@ const Total = ({exercises}) =>
     <Content parts={course.parts} />
     <Total exercises={course.parts} />
     </>
+
+export default Course
