@@ -1,7 +1,6 @@
 ## About the Project
 
-This repository contains the source code and documentation for the Fullstack Open course exercises. The project encompasses both frontend and backend development, emphasizing the use of React, Node.js, Express, and MongoDB.
-
+This repository contains the source code and documentation for the Fullstack Open course exercises. The project encompasses both frontend and backend development.
 ## Technologies Used
 
 ### Frontend
