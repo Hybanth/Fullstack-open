@@ -4,7 +4,6 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 
-
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
@@ -22,7 +21,7 @@ const App = () => {
       });
   }, []);
 
-  const nameChange = (event) =>{
+  const nameChange = event =>{
     setNewName(event.target.value)
    }
   const numberChange = event =>{
@@ -38,7 +37,10 @@ const App = () => {
     if(checkDuplicate){
       alert(`${newName} is already added to phonebook`);
     }else{
-    const newPerson = { name: newName,number: newNumber };
+    const newPerson = {
+      name: newName,
+      number: newNumber
+    };
     axios
       .post('http://localhost:3001/persons', newPerson)
       .then(response => {
@@ -56,19 +58,17 @@ const App = () => {
     person.name.toLowerCase().includes(search.toLowerCase())
   );
   
-
   return (
     <div>
       <h2>Phonebook</h2>
-     <Filter search={search} handleSearchChange={handleSearchChange} />
-      <PersonForm  newName={newName} 
-        newNumber={newNumber}
-        handleNameChange={nameChange}
-        handleNumberChange={numberChange}
-        handleSubmit={formHandling} />
+        <Filter search={search} handleSearchChange={handleSearchChange} />
+          <PersonForm  newName={newName} 
+            newNumber={newNumber}
+            handleNameChange={nameChange}
+            handleNumberChange={numberChange}
+            handleSubmit={formHandling} />
       <h2>Numbers</h2>
-      <Persons contactsToShow={personsToShow} />
-      
+        <Persons contactsToShow={personsToShow} />
     </div>
   )
 }
