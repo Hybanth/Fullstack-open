@@ -1,8 +1,8 @@
 import { useState,useEffect } from 'react';
-import axios from 'axios';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import communicationService from './services/communication';
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,8 +11,8 @@ const App = () => {
   const[search, setSearch] =useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    communicationService
+    .getAll()
       .then(response => {
         setPersons(response.data);
       })
@@ -41,8 +41,8 @@ const App = () => {
       name: newName,
       number: newNumber
     };
-    axios
-      .post('http://localhost:3001/persons', newPerson)
+    communicationService
+    .create()
       .then(response => {
         setPersons(persons.concat(response.data));
         setNewName('');
