@@ -13,8 +13,8 @@ const App = () => {
   useEffect(() => {
     communicationService
     .getAll()
-      .then(response => {
-        setPersons(response.data);
+      .then(initialPersons => {
+        setPersons(initialPersons);
       })
       .catch(error => {
         console.error('Error fetching data: ', error);
@@ -42,9 +42,9 @@ const App = () => {
       number: newNumber
     };
     communicationService
-    .create()
-      .then(response => {
-        setPersons(persons.concat(response.data));
+    .create(newPerson)
+      .then(addedAPerson => {
+        setPersons(persons.concat(addedAPerson));
         setNewName('');
         setNewNumber('');
       })
