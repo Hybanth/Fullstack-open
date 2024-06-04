@@ -1,6 +1,6 @@
 ## About the Project
 
-This repository contains the source code and documentation for the Fullstack Open course exercises. The project encompasses both frontend and backend development.
+This repository contains the source code and documentation for my Fullstack open project and exercises. The project encompasses both frontend and backend development.
 
 ## Technologies Used
 
