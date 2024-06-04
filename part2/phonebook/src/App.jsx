@@ -2,6 +2,7 @@ import { useState,useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import Notification from './components/Notification';
 import communicationService from './services/communication';
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const[newNumber, setNewNumber] =useState('')
   const[search, setSearch] =useState('')
+  const[notification, setNotification] = useState(null);
 
   useEffect(() => {
     communicationService
@@ -51,6 +53,10 @@ const App = () => {
           ));
           setNewName('');
           setNewNumber('');
+          setNotification(`Updated ${newName}'s number`);
+          setTimeout(()=>{
+            setNotification(null);
+          },5000);
          })
          .catch(error =>{
           console.error('Error updating preson:',error);
@@ -63,12 +69,16 @@ const App = () => {
     };
     communicationService
     .create(newPerson)
-      .then(addedAPerson => {
+    .then(addedAPerson => {
         setPersons(persons.concat(addedAPerson));
         setNewName('');
         setNewNumber('');
-      })
-      .catch(error => {
+        setNotification(`Added ${newName}`);
+        setTimeout(()=> {
+          setNotification(null);
+        },5000);
+    })
+    .catch(error => {
         console.error('Error adding person: ', error);
       });
     }
@@ -95,6 +105,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
         <Filter search={search} handleSearchChange={handleSearchChange} />
           <PersonForm  newName={newName} 
             newNumber={newNumber}
