@@ -33,9 +33,29 @@ const App = () => {
 
   const formHandling = (event) => {
     event.preventDefault();
-    const checkDuplicate = persons.some(person =>person.name === newName);
-    if(checkDuplicate){
-      alert(`${newName} is already added to phonebook`);
+    const existingPerson = persons.find(person =>person.name === newName);
+
+    if(existingPerson){
+      const confirmUpdate = window.confirm(
+        `${newName} is already added to phonebook, replace the old number with the new one?`
+      );
+    
+      if(confirmUpdate){
+         const updatedPerson = {...existingPerson,number:newNumber};
+
+         communicationService
+         .update(existingPerson.id,updatedPerson)
+         .then(returnedPerson => {
+          setPersons(persons.map(person =>
+            person.id !== existingPerson.id ? person : returnedPerson
+          ));
+          setNewName('');
+          setNewNumber('');
+         })
+         .catch(error =>{
+          console.error('Error updating preson:',error);
+         });
+      }
     }else{
     const newPerson = {
       name: newName,
