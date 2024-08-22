@@ -9,7 +9,11 @@ const getAll = () => {
 
 const create = newPerson => {
   const request = axios.post(baseUrl, newPerson);
-  return request.then(response => response.data);
+  return request.then(response => response.data)
+  .catch(error => {
+    console.error('Error creating person:', error.response.data.error);
+    throw error;
+  });
 }
 
 const deletePerson = id =>{
@@ -20,7 +24,11 @@ const deletePerson = id =>{
 
 const update = (id,updatedPerson) =>{
   const request = axios.put(`${baseUrl}/${id}`,updatedPerson);
-  return request.then(response => response.data);
+  return request.then(response => response.data)
+  .catch(error => {
+    console.error('Error updating person:', error.response.data.error);
+    throw error;
+  });
 }
 
 export default { getAll, create, deletePerson, update };

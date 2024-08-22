@@ -10,7 +10,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const[newNumber, setNewNumber] =useState('')
   const[search, setSearch] =useState('')
-  const[notification, setNotification] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     communicationService
@@ -53,13 +54,15 @@ const App = () => {
           ));
           setNewName('');
           setNewNumber('');
-          setNotification(`Updated ${newName}'s number`);
+          setMessage(`Updated ${newName}'s number`);
           setTimeout(()=>{
-            setNotification(null);
+            setMessage(null);
           },5000);
          })
          .catch(error =>{
           console.error('Error updating preson:',error);
+          setErrorMessage(error.response.data.error || 'Failed to update person.');
+          setTimeout(() => setErrorMessage(null), 5000);
          });
       }
     }else{
@@ -73,13 +76,15 @@ const App = () => {
         setPersons(persons.concat(addedAPerson));
         setNewName('');
         setNewNumber('');
-        setNotification(`Added ${newName}`);
+        setMessage(`Added ${newName}`);
         setTimeout(()=> {
-          setNotification(null);
+          setMessage(null);
         },5000);
     })
     .catch(error => {
         console.error('Error adding person: ', error);
+        setErrorMessage(error.response.data.error);
+          setTimeout(() => setErrorMessage(null), 5000);
       });
     }
   }
@@ -91,9 +96,15 @@ const App = () => {
       .deletePerson(id)
       .then(()=>{
         setPersons(persons.filter(p=>p.id !== id));
+        setErrorMessage(`Deleted ${person.name}`);
+        setTimeout(()=> {
+          setErrorMessage(null);
+        },5000);
       })
       .catch(error =>{
         console.error('Error deleting person: ', error);
+        setErrorMessage(`Failed to delete ${person.name}.`);
+        setTimeout(() => setErrorMessage(null), 5000);
       })
     }
   }
@@ -105,7 +116,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notification} />
+      <Notification message={message} errorMessage={errorMessage} />
         <Filter search={search} handleSearchChange={handleSearchChange} />
           <PersonForm  newName={newName} 
             newNumber={newNumber}
